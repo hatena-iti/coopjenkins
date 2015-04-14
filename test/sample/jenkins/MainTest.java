@@ -7,7 +7,7 @@ import static org.hamcrest.CoreMatchers.*;
 public class MainTest {
 
 	@Test
-	public void repeatメソッドにhogeと5を渡したら_hogehogehogehogehoge_が返ってくること() {
+	public void repeat5() {
 		// exercise
 		String actual = Main.repeat("hoge", 5);
 

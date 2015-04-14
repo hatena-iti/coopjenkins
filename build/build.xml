@@ -8,7 +8,7 @@
   <property name="lib.dir"         location="../lib" />
   <property name="scripts.dir"     location="../scripts" />
   <property name="start.script"    location="${scripts.dir}/execute.bat" />
-  <property name="test.report.dir" location="${work.dir}/test-report" />
+  <property name="test.report.dir" location="test-report" />
 
   <property name="src.encoding" value="UTF-8" />
   <property name="main.class"   value="sample.jenkins.Main" />
@@ -30,6 +30,7 @@
 
   <target name="clean" description="Ant タスクで生成された全てのファイルを削除します">
     <delete dir="${work.dir}" />
+    <delete dir="${test.report.dir}" />
     <delete>
       <fileset dir="." includes="TEST*" />
     </delete>
@@ -70,7 +71,7 @@
       <classpath refid="runtime.classpath" />
       <classpath refid="test.classpath" />
       <test name="${test.class}" todir="${test.report.dir}" />
-      <formatter type="plain" extension=".txt" />
+      <formatter type="xml" extension=".xml" />
     </junit>
   </target>
 
