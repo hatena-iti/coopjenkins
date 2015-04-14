@@ -10,7 +10,7 @@
   <property name="start.script"    location="${scripts.dir}/execute.bat" />
   <property name="test.report.dir" location="${work.dir}/test-report" />
 
-  <property name="src.encoding" value="Shift_JIS" />
+  <property name="src.encoding" value="UTF-8" />
   <property name="main.class"   value="sample.jenkins.Main" />
   <property name="test.class"   value="sample.jenkins.MainTest" />
   <property name="jar.name"     value="jenkins-sample.jar" />
@@ -28,14 +28,14 @@
     </fileset>
   </path>
 
-  <target name="clean" description="Ant ƒ^ƒXƒN‚Å¶¬‚³‚ê‚½‘S‚Ä‚Ìƒtƒ@ƒCƒ‹‚ðíœ‚µ‚Ü‚·">
+  <target name="clean" description="Ant ã‚¿ã‚¹ã‚¯ã§ç”Ÿæˆã•ã‚ŒãŸå…¨ã¦ã®ãƒ•ã‚¡ã‚¤ãƒ«ã‚’å‰Šé™¤ã—ã¾ã™">
     <delete dir="${work.dir}" />
     <delete>
       <fileset dir="." includes="TEST*" />
     </delete>
   </target>
 
-  <target name="compile" description="ƒ\[ƒXƒR[ƒh‚ðƒRƒ“ƒpƒCƒ‹‚µ‚Ä class ƒtƒ@ƒCƒ‹‚ð¶¬‚µ‚Ü‚·">
+  <target name="compile" description="ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã‚’ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã—ã¦ class ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”Ÿæˆã—ã¾ã™">
     <mkdir dir="${classes.dir}" />
 
     <javac srcdir="${src.dir}"
@@ -44,7 +44,7 @@
            classpathref="runtime.classpath" />
   </target>
 
-  <target name="compile-test" depends="compile" description="ƒeƒXƒgƒR[ƒh‚ðƒRƒ“ƒpƒCƒ‹‚µ‚Ä class ƒtƒ@ƒCƒ‹‚ð¶¬‚µ‚Ü‚·">
+  <target name="compile-test" depends="compile" description="ãƒ†ã‚¹ãƒˆã‚³ãƒ¼ãƒ‰ã‚’ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã—ã¦ class ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”Ÿæˆã—ã¾ã™">
     <mkdir dir="${classes.dir}" />
 
     <javac srcdir="${test.src.dir}"
@@ -53,7 +53,7 @@
            classpathref="test.classpath" />
   </target>
 
-  <target name="exec" depends="compile" description="ƒRƒ“ƒpƒCƒ‹‚µ‚½ƒAƒvƒŠƒP[ƒVƒ‡ƒ“‚ðŽÀs‚µ‚Ü‚·">
+  <target name="exec" depends="compile" description="ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã—ãŸã‚¢ãƒ—ãƒªã‚±ãƒ¼ã‚·ãƒ§ãƒ³ã‚’å®Ÿè¡Œã—ã¾ã™">
     <java classname="${main.class}"
           classpath="${classes.dir}"
           classpathref="runtime.classpath">
@@ -62,7 +62,7 @@
     </java>
   </target>
 
-  <target name="test" depends="compile-test" description="JUnit ‚ÌƒeƒXƒg‚ðŽÀs‚µ‚Ü‚·">
+  <target name="test" depends="compile-test" description="JUnit ã®ãƒ†ã‚¹ãƒˆã‚’å®Ÿè¡Œã—ã¾ã™">
     <mkdir dir="${test.report.dir}" />
 
     <junit>
@@ -74,13 +74,13 @@
     </junit>
   </target>
 
-  <target name="jar" depends="test" description="ƒ\[ƒXƒR[ƒh‚ðƒRƒ“ƒpƒCƒ‹‚µ‚Ä jar ƒtƒ@ƒCƒ‹‚ÉŒÅ‚ß‚Ü‚·">
+  <target name="jar" depends="test" description="ã‚½ãƒ¼ã‚¹ã‚³ãƒ¼ãƒ‰ã‚’ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«ã—ã¦ jar ãƒ•ã‚¡ã‚¤ãƒ«ã«å›ºã‚ã¾ã™">
     <jar destfile="${work.dir}/${jar.name}"
          basedir="${classes.dir}"
          excludes="**/*Test.class" />
   </target>
 
-  <target name="build" depends="jar" description="ƒvƒƒWƒFƒNƒg‚ðƒrƒ‹ƒh‚µ‚Ä”z•z‰Â”\‚È zip ƒtƒ@ƒCƒ‹‚ð¶¬‚µ‚Ü‚·">
+  <target name="build" depends="jar" description="ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ãƒˆã‚’ãƒ“ãƒ«ãƒ‰ã—ã¦é…å¸ƒå¯èƒ½ãª zip ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ç”Ÿæˆã—ã¾ã™">
     <mkdir dir="${assemble.dir}/lib" />
     <mkdir dir="${assemble.dir}/bin" />
 
