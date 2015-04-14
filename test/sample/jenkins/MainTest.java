@@ -18,7 +18,7 @@ public class MainTest {
     @Test
     public void repeat3() {
         // exercise
-        String actual = Main.repeat("Test", 5);
+        String actual = Main.repeat("Test", 6);
 
         // verify
         assertThat(actual, is("TestTestTest"));
