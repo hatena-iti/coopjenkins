@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="iz" basedir=".">
+  <property name="work.dir"        location="work" />
+
+  <target name="clean" description="Ant タスクで生成された全てのファイルを削除します">
+    <delete dir="${work.dir}" />
+    <delete>
+      <fileset dir="." includes="TEST*" />
+    </delete>
+  </target>
+</project>
