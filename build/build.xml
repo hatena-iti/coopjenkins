@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="Shift_JIS"?>
+<project basedir=".">
+  <property name="work.dir"        location="work" />
+  <property name="classes.dir"     location="${work.dir}/classes" />
+  <property name="assemble.dir"    location="${work.dir}/assemble" />
+  <property name="src.dir"         location="../src" />
+  <property name="test.src.dir"    location="../test" />
+  <property name="lib.dir"         location="../lib" />
+  <property name="scripts.dir"     location="../scripts" />
+  <property name="start.script"    location="${scripts.dir}/execute.bat" />
+  <property name="test.report.dir" location="${work.dir}/test-report" />
+
+  <property name="src.encoding" value="Shift_JIS" />
+  <property name="main.class"   value="sample.jenkins.Main" />
+  <property name="test.class"   value="sample.jenkins.MainTest" />
+  <property name="jar.name"     value="jenkins-sample.jar" />
+  <property name="zip.name"     value="jenkins-sample.zip" />
+
+  <path id="runtime.classpath">
+    <fileset dir="${lib.dir}">
+      <include name="runtime/*.jar" />
+    </fileset>
+  </path>
+
+  <path id="test.classpath">
+    <fileset dir="${lib.dir}">
+      <include name="test/*.jar" />
+    </fileset>
+  </path>
+
+  <target name="clean" description="Ant タスクで生成された全てのファイルを削除します">
+    <delete dir="${work.dir}" />
+    <delete>
+      <fileset dir="." includes="TEST*" />
+    </delete>
+  </target>
+
+  <target name="compile" description="ソースコードをコンパイルして class ファイルを生成します">
+    <mkdir dir="${classes.dir}" />
+
+    <javac srcdir="${src.dir}"
+           destdir="${classes.dir}"
+           encoding="${src.encoding}"
+           classpathref="runtime.classpath" />
+  </target>
+
+  <target name="compile-test" depends="compile" description="テストコードをコンパイルして class ファイルを生成します">
+    <mkdir dir="${classes.dir}" />
+
+    <javac srcdir="${test.src.dir}"
+           destdir="${classes.dir}"
+           encoding="${src.encoding}"
+           classpathref="test.classpath" />
+  </target>
+
+  <target name="exec" depends="compile" description="コンパイルしたアプリケーションを実行します">
+    <java classname="${main.class}"
+          classpath="${classes.dir}"
+          classpathref="runtime.classpath">
+      <arg value="hoge" />
+      <arg value="5" />
+    </java>
+  </target>
+
+  <target name="test" depends="compile-test" description="JUnit のテストを実行します">
+    <mkdir dir="${test.report.dir}" />
+
+    <junit>
+      <classpath location="${classes.dir}" />
+      <classpath refid="runtime.classpath" />
+      <classpath refid="test.classpath" />
+      <test name="${test.class}" todir="${test.report.dir}" />
+      <formatter type="plain" extension=".txt" />
+    </junit>
+  </target>
+
+  <target name="jar" depends="test" description="ソースコードをコンパイルして jar ファイルに固めます">
+    <jar destfile="${work.dir}/${jar.name}"
+         basedir="${classes.dir}"
+         excludes="**/*Test.class" />
+  </target>
+
+  <target name="build" depends="jar" description="プロジェクトをビルドして配布可能な zip ファイルを生成します">
+    <mkdir dir="${assemble.dir}/lib" />
+    <mkdir dir="${assemble.dir}/bin" />
+
+    <copy file="${start.script}" todir="${assemble.dir}/bin" />
+    <copy todir="${assemble.dir}/lib">
+      <fileset dir="${lib.dir}/runtime" includes="**/*.jar" />
+      <fileset file="${work.dir}/${jar.name}" />
+    </copy>
+
+    <zip destfile="${work.dir}/${zip.name}"
+         basedir="${assemble.dir}" />
+  </target>
+</project>
