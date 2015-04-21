@@ -24,4 +24,13 @@ public class MainTest {
 		assertThat(actual, is("TestTestTest"));
 	}
 
+	@Test
+	public void repeat1() {
+		// exercise
+		String actual = Main.repeat("Sample", 1);
+
+		// verify
+		assertThat(actual, is("Sample"));
+	}
+
 }
